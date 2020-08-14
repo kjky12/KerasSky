@@ -1,0 +1,51 @@
+
+
+//학습 모드
+#define df_MESS_PY_LEARNING_ALL_INIT             1001  //학습 모드 - 전체 초기화
+#define df_MESS_PY_LEARNING_POSE_INIT            1002  //학습 모드 - 부분 초기화
+#define df_MESS_PY_LEARNING_ADD_DATA             1003  //학습 모드 - 데이터 추가
+#define df_MESS_PY_LEARNING_LEARN                1004  //학습 모드 - 학습
+
+//인식 모드
+#define df_MESS_PY_CHK_COUNT_POSE                2001  //인식 모드 - 자세 갯수 확인
+#define df_MESS_PY_CHK_POSE                      2002  //인식 모드 - 현재 자세 확인
+
+#define df_MESS_PY_RECV_ERROR   			 	 1200	//서버 에러
+#define PY_FAIL_DATA		                	 -9991	//Deep Lerning Fail
+
+
+
+//! 헤더만 전송(MessageID)
+//학습 모드 - 전체 초기화	
+//학습 모드 - 학습
+//인식 모드 - 자세 갯수 확인
+
+typedef struct P_HEADER
+{
+	int			nMessageSize;
+	int			nMessageID;
+	int			nTemp;
+}P_HEADER;
+
+
+typedef struct ST_MESS_PY_LEARNING_POSE_INIT	//학습 모드 - 부분 초기화
+{
+	P_HEADER	pHeader;
+	int			nPos;	//삭제할 자세 번호
+}ST_MESS_PY_LEARNING_POSE_INIT;
+
+typedef struct ST_MESS_PY_LEARNING_ADD_DATA		//학습 모드 - 데이터 추가
+{
+	P_HEADER	pHeader;
+	int			nAddPoseData;		//! 추가할 자세 데이터 갯수
+	int			nPose;				//! 추가할 자세
+	int			nPoseDataCnt;		//! 자세 갯수(ex : 63)
+	float		fPoseData[1024];	//! 자세 데이터
+}ST_MESS_PY_LEARNING_ADD_DATA;
+
+typedef struct ST_MESS_PY_CHK_POSE				//인식 모드 - 현재 자세 확인
+{
+	P_HEADER	pHeader;
+	int			nPoseDataCnt;		//! 자세 갯수(ex : 63)
+	float		fPoseData[1024];		//! 자세 데이터
+}ST_MESS_PY_CHK_POSE;
